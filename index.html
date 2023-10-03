@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+        <link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+        <header>
+            <h1>A simple Page assistant</h1>
+        </header>
+        <main>
+            <div id="app">
+                <div class="card-container">
+                  <div>
+                    <img style="width: 150px; height: 150px" src="/batman.png" alt="" />
+                  </div>
+                  <div>
+                    <p class="card-content">Hello I'm batman. Ready to assist you on your journey on this webpage</p>
+                  </div>
+                </div>
+          
+                <div class="button-container">
+                    <h4 id="text">Hello World! This assistant helps explain what each button does</h4>
+                    <div id="container3D"></div>
+                    <button onclick= Red() id="button1">Red</button>
+                    <button onclick= Blue() id="button2">Blue</button>
+                    <button onclick= Green() id="button3">Green</button>
+                    <button onclick= Bigger() id="button4">Text</button>
+                    <button onclick= Smaller() id="button5">Small</button>
+                    <button onclick= color() id="button6">color</button>
+                </div>
+          
+                <div class="overlay"></div>
+              </div>
+
+        </main>
+        <script>
+            function Red() {
+                document.body.style.backgroundColor= "Red"
+            }
+            function Blue() {
+                document.body.style.backgroundColor= "Blue"
+            }
+            function Green() {
+                document.body.style.backgroundColor= "Green"
+            }
+            function Bigger() {
+                document.getElementById('text').style.fontSize= '40px';
+            }
+            function Smaller() {
+                document.getElementById('text').style.fontSize= '20px';
+            }
+            function color() {
+                document.getElementById('text').style.color= 'white';
+            }
+            const cardCont = document.querySelector(".card-container");
+            const cardContent = document.querySelector(".card-content");
+            const overlay = document.querySelector(".overlay");
+
+      const contentMap = {
+        button1: "This changes the background color to Red",
+        button2: "This changes the background color to Blue",
+        button3: "This changes the background color to Green",
+        button4: "This makes everything bigger",
+        button5: "This makes them smaller",
+        button6: "This makes the text white"
+      };
+
+      document
+        .getElementById("button1")
+        .addEventListener("click", () => moveCard("button1"));
+      document
+        .getElementById("button2")
+        .addEventListener("click", () => moveCard("button2"));
+      document
+        .getElementById("button3")
+        .addEventListener("click", () => moveCard("button3"));
+      document
+        .getElementById("button4")
+        .addEventListener("click", () => moveCard("button4"));
+      document
+        .getElementById("button5")
+        .addEventListener("click", () => moveCard("button5"));
+    document
+        .getElementById("button6")
+        .addEventListener("click", () => moveCard("button6"));
+
+      function moveCard(btnID) {
+        const exp = contentMap[btnID];
+        const rect = document.getElementById(btnID).getBoundingClientRect();
+
+        console.log(rect);
+
+        const height = window.innerHeight;
+        const width = window.innerWidth;
+
+        cardCont.style.transition = "0.3s ease";
+        cardCont.style.bottom = `${height - rect.bottom -100}px`;
+        cardCont.style.left = `${rect.left - 100}px`;
+
+        cardCont.classList.add("active");
+
+        if (!overlay.classList.contains("active"))
+          overlay.classList.add("active");
+
+        if (cardCont.classList.contains("active")) {
+          cardContent.textContent = exp;
+        }
+      }
+
+      overlay.addEventListener("click", () => {
+        cardCont.style.bottom = "10px";
+        cardCont.style.left = "10px";
+        overlay.classList.remove("active");
+        cardContent.textContent = "Batman OUT!";
+      });
+        </script>
+      
+		<script type="module" src="/main.js"></script>
+	</body>
+</html>
